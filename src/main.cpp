@@ -120,6 +120,7 @@ static void StartAsServer( uint16_t min_port, uint16_t max_port )
    NetAddressClean( &gClientAddr );
    NetSessionStart( sp, cStartPort );
    while (!NetAddressIsValid(gClientAddr)) {
+      NetSystemStep();
       ThreadSleep(100);
    }
 
