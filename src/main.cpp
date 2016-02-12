@@ -95,6 +95,7 @@ NET_MESSAGE( test_pong, eGamePacket_Pong )
 NET_MESSAGE( test_next, eGamePacket_Next )
 {
    msg.read<uint16_t>(&gNextPort);
+   gLastReceivedTime = TimeGet_ms();
 }
 
 NET_MESSAGE( test_start, eGamePacket_Start )
@@ -136,7 +137,7 @@ static void StartAsServer( uint16_t min_port, uint16_t max_port )
       NetSessionStart( sp, port );
 
       // Tell the client to send to this port
-      CNetMessage start( eGamePacket_Start );
+      CNetMessage start( eGamePacket_Next );
       start.write<uint16_t>(port);
       NetMessageSendDirect( sp, gClientAddr, start );
 
