@@ -136,14 +136,15 @@ static void StartAsServer( uint16_t min_port, uint16_t max_port )
 
       NetSessionStart( sp, port );
 
-      // Tell the client to send to this port
-      CNetMessage start( eGamePacket_Next );
-      start.write<uint16_t>(port);
-      NetMessageSendDirect( sp, gClientAddr, start );
 
       // Okay, now wait for messages.
       uint_t start_time = TimeGet_ms();
       while (true) {
+         // Tell the client to send to this port
+         CNetMessage start( eGamePacket_Next );
+         start.write<uint16_t>(port);
+         NetMessageSendDirect( sp, gClientAddr, start );
+
          NetSystemStep();
 
          uint_t curr_time = TimeGet_ms();
